@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Lists2Playlists Configuration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .config-section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button.secondary {
+            background-color: #008CBA;
+        }
+        button.secondary:hover {
+            background-color: #007399;
+        }
+        .list-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .success {
+            color: green;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lists2Playlists Configuration</h1>
+    
+    <div class="config-section">
+        <div class="section-title">Plugin Settings</div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="enablePlugin" checked />
+                Enable Lists2Playlists
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="syncInterval">Sync Interval (Hours):</label>
+            <input type="number" id="syncInterval" value="6" min="1" max="24" />
+        </div>
+        <button onclick="savePluginSettings()">Save Plugin Settings</button>
+        <div id="pluginMessage"></div>
+    </div>
+
+    <div class="config-section">
+        <div class="section-title">List Configurations</div>
+        <div id="listsList"></div>
+        <button class="secondary" onclick="showAddListForm()">Add New List</button>
+    </div>
+
+    <div class="config-section" id="addListForm" style="display: none;">
+        <div class="section-title">Add List Configuration</div>
+        <div class="form-group">
+            <label for="listName">List Name:</label>
+            <input type="text" id="listName" placeholder="e.g., Marvel Cinematic Universe" />
+        </div>
+        <div class="form-group">
+            <label for="listUrl">List URL/Identifier:</label>
+            <input type="text" id="listUrl" placeholder="e.g., trakt.tv/users/moses456/lists/marvel-cinematic-universe" />
+        </div>
+        <div class="form-group">
+            <label for="sourceType">Source Service:</label>
+            <select id="sourceType">
+                <option value="0">Trakt</option>
+                <option value="1">SIMKL</option>
+                <option value="2">Serializd</option>
+                <option value="3">Letterboxd</option>
+                <option value="4">mdblist</option>
+                <option value="5">IMDb</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="playlistPrefix">Playlist Name Prefix:</label>
+            <input type="text" id="playlistPrefix" placeholder="Optional" />
+        </div>
+        <div class="form-group">
+            <label for="playlistSuffix">Playlist Name Suffix:</label>
+            <input type="text" id="playlistSuffix" placeholder="Optional" />
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="includeMovies" checked />
+                Include Movies
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="includeShows" checked />
+                Include TV Shows
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="sortOrder">Sort Order:</label>
+            <select id="sortOrder">
+                <option value="0">List Order</option>
+                <option value="1">Title</option>
+                <option value="2">Release Date</option>
+                <option value="3">Custom</option>
+            </select>
+        </div>
+        <button onclick="saveListConfiguration()">Save List</button>
+        <button onclick="hideAddListForm()" class="secondary">Cancel</button>
+        <div id="listMessage"></div>
+    </div>
+
+    <script>
+        function savePluginSettings() {
+            const message = document.getElementById('pluginMessage');
+            // API call would go here
+            message.innerHTML = '<span class="success">Plugin settings saved successfully</span>';
+        }
+
+        function showAddListForm() {
+            document.getElementById('addListForm').style.display = 'block';
+        }
+
+        function hideAddListForm() {
+            document.getElementById('addListForm').style.display = 'none';
+        }
+
+        function saveListConfiguration() {
+            const name = document.getElementById('listName').value;
+            const url = document.getElementById('listUrl').value;
+            const message = document.getElementById('listMessage');
+
+            if (!name || !url) {
+                message.innerHTML = '<span class="error">Name and URL are required</span>';
+                return;
+            }
+
+            // API call would go here
+            message.innerHTML = '<span class="success">List configuration saved successfully</span>';
+            hideAddListForm();
+            loadListConfigurations();
+        }
+
+        function loadListConfigurations() {
+            // API call would load and display list configurations here
+            // This is a placeholder
+        }
+
+        // Load configurations on page load
+        window.addEventListener('load', function() {
+            loadListConfigurations();
+        });
+    </script>
+</body>
+</html>
