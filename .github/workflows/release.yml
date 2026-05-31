@@ -63,7 +63,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Update repository.json
+    -name: Update repository.json
       run: |
         VERSION=${{ steps.tag_name.outputs.version }}
         DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/Lists2Playlists-${VERSION}.zip"
@@ -75,5 +75,5 @@ jobs:
         git config --local user.name "GitHub Action"
         git add repository.json
         git commit -m "Update repository.json for v${{ steps.tag_name.outputs.version }}"
-        git push
+        git push origin HEAD:main
       continue-on-error: true
