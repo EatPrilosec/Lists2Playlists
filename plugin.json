@@ -1,0 +1,14 @@
+{
+  "name": "Lists2Playlists",
+  "description": "Create Emby playlists from online list services like Trakt, SIMKL, Letterboxd, and more",
+  "overview": "Lists2Playlists fetches lists from popular online services and automatically matches them to your Emby library, creating playlists with customizable naming, sorting, and filtering options. Supports manual matching, blacklisting, and OAuth authentication for Trakt.",
+  "id": "lists2playlists",
+  "version": "1.0.0",
+  "targetAbi": "4.8.0.0",
+  "framework": "net6.0",
+  "owner": "Lists2Playlists Contributors",
+  "category": "General",
+  "requiredVersions": [],
+  "sortingName": "Lists2Playlists",
+  "expiredVersions": []
+}

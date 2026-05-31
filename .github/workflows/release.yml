@@ -1,0 +1,79 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Create plugin package
+      run: |
+        mkdir -p plugin_package
+        cp bin/Release/netstandard2.1/Lists2Playlists.dll plugin_package/
+        cp plugin.json plugin_package/manifest.json
+        cp Configuration/configPage.html plugin_package/
+        cd plugin_package && zip -r ../Lists2Playlists.zip * && cd ..
+
+    - name: Get version from tag
+      id: tag_name
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        release_name: Lists2Playlists v${{ steps.tag_name.outputs.version }}
+        tag_name: ${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Lists2Playlists.zip
+        asset_name: Lists2Playlists-${{ steps.tag_name.outputs.version }}.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update repository.json
+      run: |
+        VERSION=${{ steps.tag_name.outputs.version }}
+        DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/Lists2Playlists-${VERSION}.zip"
+        node .github/scripts/update-repo.js "$VERSION" "$DOWNLOAD_URL"
+
+    - name: Commit repository.json
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add repository.json
+        git commit -m "Update repository.json for v${{ steps.tag_name.outputs.version }}"
+        git push
+      continue-on-error: true
