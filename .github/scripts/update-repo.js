@@ -12,12 +12,9 @@ if (!version || !downloadUrl) {
 }
 
 const repoPath = path.join(__dirname, '../../repository.json');
-
-// Read the plugin.json to get base info
 const pluginPath = path.join(__dirname, '../../plugin.json');
 const pluginInfo = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
 
-// Read existing repository.json if it exists
 let repository = [];
 if (fs.existsSync(repoPath)) {
   try {
@@ -33,6 +30,8 @@ const existingIndex = repository.findIndex(p => p.id === pluginInfo.id);
 // Create the new entry
 const newEntry = {
   ...pluginInfo,
+  imageUrl: `https://raw.githubusercontent.com/${process.env.GITHUB_REPOSITORY}/main/icon.png`,
+  sourceUrl: `https://github.com/${process.env.GITHUB_REPOSITORY}`,
   version: version,
   downloadUrl: downloadUrl,
   releaseDate: new Date().toISOString().split('T')[0],
