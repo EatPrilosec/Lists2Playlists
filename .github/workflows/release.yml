@@ -34,6 +34,7 @@ jobs:
         cp bin/Release/netstandard2.1/Lists2Playlists.dll plugin_package/
         cp plugin.json plugin_package/manifest.json
         cp Configuration/configPage.html plugin_package/
+        cp icon.png plugin_package/
         cd plugin_package && zip -r ../Lists2Playlists.zip * && cd ..
 
     - name: Get version from tag
