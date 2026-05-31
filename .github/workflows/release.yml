@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '20'
 
     - name: Restore dependencies
       run: dotnet restore
@@ -43,27 +43,24 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
 
     - name: Create Release
-      uses: actions/create-release@v1
-      id: create_release
+      uses: softprops/action-gh-release@v2
       with:
+        tag_name: ${{ github.ref }}
+        release_name: Lists2Playlists ${{ steps.tag_name.outputs.version }}
         draft: false
         prerelease: false
-        release_name: Lists2Playlists v${{ steps.tag_name.outputs.version }}
-        tag_name: ${{ github.ref }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v2
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Lists2Playlists.zip
-        asset_name: Lists2Playlists-${{ steps.tag_name.outputs.version }}.zip
-        asset_content_type: application/zip
+        tag_name: ${{ github.ref }}
+        files: Lists2Playlists.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    -name: Update repository.json
+    - name: Update repository.json
       run: |
         VERSION=${{ steps.tag_name.outputs.version }}
         DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/Lists2Playlists-${VERSION}.zip"
