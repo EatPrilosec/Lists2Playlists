@@ -2,25 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using MediaBrowser.Common.Configuration;
 
 namespace Lists2Playlists.Configuration
 {
     /// <summary>
     /// Plugin configuration model for Lists2Playlists
     /// </summary>
-    public class PluginConfiguration
+    public class PluginConfiguration : BasePluginConfiguration
     {
-        /// <summary>
-        /// Gets or sets the title of the plugin configuration page
-        /// </summary>
-        public override string EditorTitle => "Lists2Playlists";
-
-        /// <summary>
-        /// Gets or sets the description of the plugin configuration page
-        /// </summary>
-        public override string EditorDescription => 
-            "Create Emby playlists from online list services like Trakt, SIMKL, Letterboxd, and more.";
-
         /// <summary>
         /// Gets or sets the list configurations
         /// </summary>

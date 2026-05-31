@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediaBrowser.Controller.Plugins;
+using MediaBrowser.Model.Tasks;
 using Lists2Playlists.Configuration;
 using Lists2Playlists.Providers;
 using Lists2Playlists.Services;
