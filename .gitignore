@@ -1,0 +1,36 @@
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Packaging artifacts
+*.nupkg
+*.snupkg
+*.zip
+
+# Testing artifacts
+[Cc]ache/
+[Cc]ookies/
+[Dd]ata/
+[Ll]ogs/
+[Tt]emp/
+[Tr]ace/
+[Rr]e[sS]ults/
+
+# Dependency directories
+paket_files/
+node_modules/
+
+# IDE folders
+.vscode/
+.idea/
+
+# Misc
+.DS_Store
+Thumbs.db

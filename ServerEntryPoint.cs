@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using MediaBrowser.Common.Plugins;
 using MediaBrowser.Controller.Plugins;
 using MediaBrowser.Controller.Library;
@@ -29,6 +30,7 @@ namespace Lists2Playlists
         private IPlaylistService? _playlistService;
         private ISyncOrchestrator? _syncOrchestrator;
         private SyncListsTask? _syncTask;
+        private bool _isInitialized;
 
         public ServerEntryPoint(
             ILibraryManager libraryManager,
@@ -40,20 +42,22 @@ namespace Lists2Playlists
             _playlistManager = playlistManager ?? throw new ArgumentNullException(nameof(playlistManager));
             _applicationPaths = applicationPaths ?? throw new ArgumentNullException(nameof(applicationPaths));
             _jsonSerializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
+            
+            InitializeServices();
         }
 
         public string Name => "Lists2Playlists Entry Point";
 
         public event EventHandler? Disposed;
 
-        public async void RunBeforeStartup()
+        public void RunBeforeStartup()
         {
-            InitializeServices();
+            // Intentionally left empty - initialization happens in constructor
         }
 
-        public Task RunAsync()
+        public void Run()
         {
-            return Task.CompletedTask;
+            // Intentionally left empty - initialization happens in constructor
         }
 
         public void Dispose()
@@ -63,6 +67,9 @@ namespace Lists2Playlists
 
         private void InitializeServices()
         {
+            if (_isInitialized)
+                return;
+
             try
             {
                 // Initialize configuration service
@@ -91,14 +98,15 @@ namespace Lists2Playlists
                 // Initialize and register scheduled task
                 _syncTask = new SyncListsTask(_syncOrchestrator, _configurationService);
                 
-                // Register the task
-                var taskManager = Plugin.Instance?.TaskManager;
-                if (taskManager != null)
-                {
-                    // Task registration would happen here
-                }
+                // TODO: Register the task with Emby's task manager
+                // var taskManager = Plugin.Instance?.TaskManager;
+                // if (taskManager != null)
+                // {
+                //     // Task registration logic here
+                // }
 
                 System.Diagnostics.Debug.WriteLine("Lists2Playlists services initialized successfully");
+                _isInitialized = true;
             }
             catch (Exception ex)
             {

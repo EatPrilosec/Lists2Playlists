@@ -45,7 +45,7 @@ namespace Lists2Playlists.ScheduledTasks
             };
         }
 
-        public async Task ExecuteAsync(IProgress<double> progress, CancellationToken cancellationToken)
+        public async Task Execute(CancellationToken cancellationToken, IProgress<double> progress)
         {
             try
             {

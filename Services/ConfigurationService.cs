@@ -5,6 +5,7 @@ using System.Linq;
 using MediaBrowser.Common.Configuration;
 using MediaBrowser.Model.Serialization;
 using Lists2Playlists.Configuration;
+using Lists2Playlists.Providers;
 
 namespace Lists2Playlists.Services
 {

@@ -51,9 +51,9 @@ namespace Lists2Playlists.Sync
 
                 // Filter by media type
                 if (!listConfig.IncludeMovies)
-                    listItems = listItems.Where(li => li.MediaType != MediaType.Movie).ToList();
+                    listItems = listItems.Where(li => li.MediaType != Lists2Playlists.Models.MediaType.Movie).ToList();
                 if (!listConfig.IncludeShows)
-                    listItems = listItems.Where(li => li.MediaType != MediaType.Show).ToList();
+                    listItems = listItems.Where(li => li.MediaType != Lists2Playlists.Models.MediaType.Show).ToList();
 
                 // Match items to library
                 var matchedItems = await MatchItemsAsync(listItems, listConfig, cancellationToken);
@@ -124,6 +124,8 @@ namespace Lists2Playlists.Sync
                 // Check if there's a manual match
                 if (listConfig.ManualMatches.TryGetValue(item.Id, out var embyItemId))
                 {
+                    // Mark the item as manually matched
+                    item.IsManualMatch = true;
                     results.Add(new MatchingResult
                     {
                         ListItem = item,

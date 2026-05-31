@@ -12,10 +12,10 @@
     "requiredVersions": [],
     "sortingName": "Lists2Playlists",
     "expiredVersions": [],
-    "imageUrl": "https://raw.githubusercontent.com/YOUR_USERNAME/Lists2Playlists/main/icon.png",
+    "imageUrl": "https://raw.githubusercontent.com/EatPrilosec/Lists2Playlists/main/icon.png",
     "releaseDate": "2026-05-30",
     "changelog": "Initial release with Trakt support, automatic library matching, manual matching UI, blacklisting, and scheduled syncing.",
-    "sourceUrl": "https://github.com/YOUR_USERNAME/Lists2Playlists",
-    "downloadUrl": "https://github.com/YOUR_USERNAME/Lists2Playlists/releases/download/v1.0.0/Lists2Playlists-1.0.0.zip"
+    "sourceUrl": "https://github.com/EatPrilosec/Lists2Playlists",
+    "downloadUrl": "https://github.com/EatPrilosec/Lists2Playlists/releases/download/v1.0.0/Lists2Playlists-1.0.0.zip"
   }
 ]

@@ -25,7 +25,7 @@ namespace Lists2Playlists.Models
 
         /// <summary>
         /// Type of item (Movie or Show)
-        /// </summary>
+        /// </>
         public MediaType MediaType { get; set; }
 
         /// <summary>
@@ -109,6 +109,11 @@ namespace Lists2Playlists.Models
         public bool RequiresConfirmation { get; set; }
 
         /// <summary>
+        /// Indicates if this match was manually configured
+        /// </summary>
+        public bool IsManualMatch { get; set; }
+
+        /// <summary>
         /// Additional candidates for manual matching
         /// </summary>
         public List<(long ItemId, string Title, int? Year, int Score)> Candidates { get; set; } = new List<(long, string, int?, int)>();
@@ -127,12 +132,12 @@ namespace Lists2Playlists.Models
         /// <summary>
         /// Refresh token
         /// </summary>
-        public string? RefreshToken { get; set; }
+        public string? RefreshToken = null;
 
         /// <summary>
         /// Token expiration time
         /// </summary>
-        public DateTime ExpiresAt { get; set; }
+        public DateTime ExpiresAt { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Token type (usually "Bearer")
